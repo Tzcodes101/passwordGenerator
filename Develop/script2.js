@@ -16,6 +16,7 @@ var includeSpecChar;
 var randomPw = "";
 //var to store types of characters for pw selection as it's being made
 var pwOptionsArr = [];
+var pwLength;
 
 lengthChoice();
 //function to prompt user to input length between 8 and 128 characters, ensuring answer is parsed as an integer, not a string
@@ -27,7 +28,7 @@ function lengthChoice() {
   //check to see if input is a number
   if (isNaN(pwLength) === true) {
     alert("Please input a number value for password length.");
-   return;
+    lengthChoice();
   }
 
   //check to see pw is greater than 8 char long and less than 128 char long, prompts again if answer evaluates to false
@@ -35,12 +36,10 @@ function lengthChoice() {
     alert("Please input a password length between 8 and 128 numbers long.")
     // have user input length again
     lengthChoice();
-  } else {
-    //call character selection function
-    charConfirm();
   }
+  //call character selection function
+  charConfirm();
 }
-
 
 //define character selection function
 function charConfirm() {
@@ -103,12 +102,11 @@ function charConfirm() {
     );
     // have user make selections again
     charConfirm();
-  } 
+  }
 }
 
 //object to store user input
 var userPwChoices = {
-  // pwlength: pwLength,
   includeLowerChar: includeLowerChar,
   includeUpperChar: includeUpperChar,
   includeNumChar: includeNumChar,
@@ -122,19 +120,18 @@ function getRandom(arr) {
   var randChar = arr[randIndex];
   return randChar;
 }
-
+// I need a way to add characters to randomPw from the pwOptionsArr the number of times that the user input for pwLength
 //generate password function
+
+generatePassword();
 function generatePassword() {
-// for loop to iterate over the passord length from the options object, selecting random indices
-for (var i = 0; i < userPwChoices.pwLength; j++) {
-  var pwOptionsArr = getRandom(pwOptionsArr);
-  result.push(pwOptionsArr);
-  return pwOptionsArr.join("");
-}
 
-console.log(pwOptionsArr);
-
-lengthChoice();
+  // for loop to iterate over the passord length from the options object, selecting random indices
+  for (var i = 0; i < pwLength; i++) {
+    var pwOptionsArr = getRandom(pwOptionsArr);
+    randomPw.push(pwOptionsArr);
+  }
+  return randomPw.join("");
 }
 
 //display pw as an alert or writtern to page

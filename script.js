@@ -12,11 +12,11 @@ var lowerCharArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", 
 var upperCharArr = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var numCharArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 var specCharArr = ["+", "-", "&&", "||", "!", "(", ")", "{", "}", "[", "]", "^",
-  "~", "*", "?", ":"];
+    "~", "*", "?", ":"];
 
 // add Event, so when the generate button is clicked, it triggers a series of events as defined above
 
-
+lengthChoice();
 // prompt user to input length
 function lengthChoice() {
     var pwLength = parseInt(
@@ -70,9 +70,6 @@ function charConfirm() {
         );
         // have user make selections again
         charConfirm();
-    } else {
-        generatePassword();
-    }
 }
 
 
@@ -89,49 +86,49 @@ function getRandom(arr) {
     var randIndex = Math.floor(Math.random() * randomArr.length);
     var randChar = arr[randIndex];
     return randChar;
-  }
+}
 
 // define function to generate password with user choices 
 function generatePassword() {
     var options = getPasswordOptions();
-        //var to store pw as it's being made
-        var result = [];
+    //var to store pw as it's being made
+    var result = [];
 
-        //array to store types of char to inclue in pw
-        var possibleChar = [];
+    //array to store types of char to inclue in pw
+    var possibleChar = [];
 
-        //array to hold one of each type of chosen char to make sure it is included in the pw
-        var guaranteedChar = [];
+    //array to hold one of each type of chosen char to make sure it is included in the pw
+    var guaranteedChar = [];
 
     // if user chose to add lower char, add lowerCharArr to array of possible char
-    if(options.includeLowerChar) {
+    if (options.includeLowerChar) {
         possibleChar = possibleChar.concat(lowerCharArr);
         //pick a random value from the lowerCharArr, and add it to the guaranteedChar array
         guaranteedChar.push(getRandom(lowerCharArr));
     }
     // if user chose to add upper char, add upperCharArr to array of possible char
-    if(options.includeUpperChar) {
+    if (options.includeUpperChar) {
         possibleChar = possibleChar.concat(upperCharArr);
         //pick a random value from the upperCharArr, and add it to the guaranteedChar array
         guaranteedChar.push(getRandom(upperCharArr));
     }
 
     // if user chose to add numeric char, add numCharArr to array of possible char
-    if(options.includeNumChar) {
+    if (options.includeNumChar) {
         possibleChar = possibleChar.concat(numCharArr);
         //pick a random value from the numCharArr, and add it to the guaranteedChar array
         guaranteedChar.push(getRandom(numCharArr));
     }
 
     // if user chose to add special char, add specCharArr to array of possible char
-    if(options.includeSpecChar) {
+    if (options.includeSpecChar) {
         possibleChar = possibleChar.concat(specCharArr);
         //pick a random value from the specCharArr, and add it to the guaranteedChar array
         guaranteedChar.push(getRandom(specCharArr));
     }
 
     // for loop to iterate over the passord length from the options object, selecting random indices
-    for ( var i = 0; i < passwordOptions.length; j++) {
+    for (var i = 0; i < passwordOptions.length; j++) {
         var possibleChars = getRandom(possibleChars);
         result.push(possibleChars);
     }
@@ -145,14 +142,15 @@ function generatePassword() {
     return result.join('');
 }
 
-//reference generate element by id
-var generateBtn = document.querySelector('#generate');
+// //reference generate element by id
+// var generateBtn = document.querySelector('#generate');
 
 // write password to the #password input
-function writePassword () {
+function writePassword() {
     var password = generatePassword();
     var passwordText = document.querySelector('#password');
     passwordText.value = password;
 }
 
-lengthChoice();
+
+}
