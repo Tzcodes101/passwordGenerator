@@ -17,13 +17,20 @@ var randomPw = "";
 //var to store types of characters for pw selection as it's being made
 var pwOptionsArr = [];
 var pwLength;
+//object to store user input
+var userPwChoices = {}
 
 lengthChoice();
+charConfirm();
+var array = availablePwChar();
+generatePassword();
+writePassword();
 //function to prompt user to input length between 8 and 128 characters, ensuring answer is parsed as an integer, not a string
 function lengthChoice() {
-  var pwLength = parseInt(
+  pwLength = parseInt(
     prompt("Input desired password length:")
   );
+  console.log(pwLength);
 
   //check to see if input is a number
   if (isNaN(pwLength) === true) {
@@ -37,8 +44,6 @@ function lengthChoice() {
     // have user input length again
     lengthChoice();
   }
-  //call character selection function
-  charConfirm();
 }
 
 //define character selection function
@@ -49,48 +54,20 @@ function charConfirm() {
     "Click OK to include lowercase letters in your password."
   );
 
-  // if loweChar evaluates to true, then add the lowerCharArr values to randomArr
-  if (includeLowerChar) {
-    Array.prototype.push.apply(pwOptionsArr, lowerCharArr)
-  }
-  // check to see if lowerCharArr added to randomArr
-  console.log(pwOptionsArr);
-
   //Ask user to confirm uppercase char inclusion
   includeUpperChar = confirm(
     "Click OK to include uppercase letters in your password."
   );
-
-  // if upperChar evaluates to true, then add the upperCharArr values to randomArr
-  if (includeUpperChar) {
-    Array.prototype.push.apply(pwOptionsArr, upperCharArr)
-  }
-  // check to see if upperrCharArr added to randomArr
-  console.log(pwOptionsArr); 3
 
   //Ask user to confirm numeric char inclusion
   includeNumChar = confirm(
     "Click OK to include numeric characters in your password."
   );
 
-  // if numChar evaluates to true, then add the numCharArr values to randomArr
-  if (includeNumChar) {
-    Array.prototype.push.apply(pwOptionsArr, numCharArr)
-  }
-  // check to see if numCharArr added to randomArr
-  console.log(pwOptionsArr);
-
   //Ask user to confirm special char inclusion
   includeSpecChar = confirm(
     "Click OK to include special characters in your password."
   );
-
-  // if specChar evaluates to true, then add the specCharArr values to randomArr
-  if (includeSpecChar) {
-    Array.prototype.push.apply(pwOptionsArr, specCharArr)
-  }
-  // check to see if specCharArr added to randomArr
-  console.log(pwOptionsArr);
 
   // check to see if has at least one of: lowercase, uppercase, numeric, or special char
   if (
@@ -103,36 +80,73 @@ function charConfirm() {
     // have user make selections again
     charConfirm();
   }
+  //object to store user input
+  userPwChoices = {
+    lowerChar: includeLowerChar,
+    upperChar: includeUpperChar,
+    numChar: includeNumChar,
+    specChar: includeSpecChar,
+  }
+  console.log(userPwChoices)
 }
 
-//object to store user input
-var userPwChoices = {
-  includeLowerChar: includeLowerChar,
-  includeUpperChar: includeUpperChar,
-  includeNumChar: includeNumChar,
-  includeSpecChar: includeSpecChar,
+//function to create array of characters available for use in pw
+function availablePwChar () {
+// if loweChar evaluates to true, then add the lowerCharArr values to randomArr
+if (includeLowerChar) {
+  pwOptionsArr = pwOptionsArr.concat(lowerCharArr);
+}
+// check to see if lowerCharArr added to randomArr
+console.log(pwOptionsArr);
 
+// if upperChar evaluates to true, then add the upperCharArr values to randomArr
+if (includeUpperChar) {
+  pwOptionsArr = pwOptionsArr.concat(upperCharArr);
+}
+// check to see if upperrCharArr added to randomArr
+console.log(pwOptionsArr);
+
+// if numChar evaluates to true, then add the numCharArr values to randomArr
+if (includeNumChar) {
+  pwOptionsArr = pwOptionsArr.concat(numCharArr);
+}
+// check to see if numCharArr added to randomArr
+console.log(pwOptionsArr);
+
+// if specChar evaluates to true, then add the specCharArr values to randomArr
+if (includeSpecChar) {
+  pwOptionsArr = pwOptionsArr.concat(specCharArr);
+}
+// check to see if specCharArr added to randomArr
+return pwOptionsArr
 }
 
 // function to get random character from an array
 function getRandom(arr) {
-  var randIndex = Math.floor(Math.random() * randomArr.length);
+  var randIndex = Math.floor(Math.random() * arr.length);
   var randChar = arr[randIndex];
+  console.log(randChar)
   return randChar;
 }
 // I need a way to add characters to randomPw from the pwOptionsArr the number of times that the user input for pwLength
 //generate password function
 
-generatePassword();
 function generatePassword() {
-
+  console.log("new array", array);
   // for loop to iterate over the passord length from the options object, selecting random indices
   for (var i = 0; i < pwLength; i++) {
-    var pwOptionsArr = getRandom(pwOptionsArr);
-    randomPw.push(pwOptionsArr);
+    var pwOptionsArr = getRandom(array);
+    
   }
-  return randomPw.join("");
+  // return randomPw.join("");
 }
 
-//display pw as an alert or writtern to page
+// display pw as an alert or written to page 
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector('#password');
+  passwordText.value = password;
+}
+
+//call functions in logical order
 
