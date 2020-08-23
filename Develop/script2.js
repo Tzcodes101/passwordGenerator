@@ -12,10 +12,9 @@ var includeLowerChar;
 var includeUpperChar;
 var includeNumChar;
 var includeSpecChar;
-//var to store pw as it's being made
-var randomPw = "";
 //var to store types of characters for pw selection as it's being made
 var pwOptionsArr = [];
+//var to store use input length for pw
 var pwLength;
 //object to store user input
 var userPwChoices = {};
@@ -123,25 +122,25 @@ function getRandom(arr) {
   console.log(randChar)
   return randChar;
 }
-// I need a way to add characters to randomPw from the pwOptionsArr the number of times that the user input for pwLength
+
 //generate password function
-
 function generatePassword() {
-  // for loop to iterate over the passord length from the options object, selecting random indices
+  var password = "";
   for (var i = 0; i < pwLength; i++) {
-    randomPw = getRandom(possibleChar);
-    return randomPw;
+  var character = getRandom(possibleChar);
+  password+=character;
   }
+  return password;
 }
-
-console.log(randomPw);
 
 // display pw as an alert or written to page 
 function writePassword() {
   var passwordText = document.querySelector('#password');
-  passwordText.value = randomPw;
+  passwordText.value = password;
 }
 
+//reference generate pw button
+var generateBtn = document.querySelector('#generate'); 
 //call functions in logical order
 lengthChoice();
 charConfirm();
