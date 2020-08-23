@@ -18,13 +18,8 @@ var randomPw = "";
 var pwOptionsArr = [];
 var pwLength;
 //object to store user input
-var userPwChoices = {}
+var userPwChoices = {};
 
-lengthChoice();
-charConfirm();
-var array = availablePwChar();
-generatePassword();
-writePassword();
 //function to prompt user to input length between 8 and 128 characters, ensuring answer is parsed as an integer, not a string
 function lengthChoice() {
   pwLength = parseInt(
@@ -132,21 +127,25 @@ function getRandom(arr) {
 //generate password function
 
 function generatePassword() {
-  console.log("new array", array);
   // for loop to iterate over the passord length from the options object, selecting random indices
   for (var i = 0; i < pwLength; i++) {
-    var pwOptionsArr = getRandom(array);
-    
+    randomPw = getRandom(possibleChar);
+    return randomPw;
   }
-  // return randomPw.join("");
 }
+
+console.log(randomPw);
 
 // display pw as an alert or written to page 
 function writePassword() {
-  var password = generatePassword();
   var passwordText = document.querySelector('#password');
-  passwordText.value = password;
+  passwordText.value = randomPw;
 }
 
 //call functions in logical order
+lengthChoice();
+charConfirm();
+var possibleChar = availablePwChar();
+generatePassword();
+writePassword();
 
