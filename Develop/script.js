@@ -16,6 +16,8 @@ var includeSpecChar;
 var pwOptionsArr = [];
 //var to store use input length for pw
 var pwLength;
+//var to store pw as it's being made;
+var randomPw;
 //object to store user input
 var userPwChoices = {};
 
@@ -125,26 +127,37 @@ function getRandom(arr) {
 
 //generate password function
 function generatePassword() {
-  var password = "";
+  randomPw = "";
   for (var i = 0; i < pwLength; i++) {
   var character = getRandom(possibleChar);
-  password+=character;
+  randomPw+=character;
   }
-  return password;
+  return randomPw;
+  //alert user how to display pw
 }
 
 // display pw as an alert or written to page 
 function writePassword() {
   var passwordText = document.querySelector('#password');
-  passwordText.value = password;
+  passwordText.value = randomPw;
 }
 
-//reference generate pw button
-var generateBtn = document.querySelector('#generate'); 
+//instruct user on how to see pw
+function seePw() {
+  alert("Click 'Generate Password' to see your password!");
+}
+
 //call functions in logical order
 lengthChoice();
 charConfirm();
 var possibleChar = availablePwChar();
 generatePassword();
-writePassword();
+seePw();
+
+//reference generate pw button
+var generateBtn = document.querySelector('#generate');
+
+//this click triggers the password to display on screen
+generateBtn.addEventListener("click", writePassword);
+
 
